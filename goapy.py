@@ -109,38 +109,50 @@ class Planner:
 					 self.action_list.weights.copy())
 
 class Action_List:
-	def __init__(self):
-		self.conditions = {}
-		self.reactions = {}
-		self.weights = {}
+    def __init__(self):
+        self.conditions = {}
+        self.reactions = {}
+        self.weights = {}
+        self.changes = {}
 
-	def add_condition(self, key, **kwargs):
-		if not key in self.weights:
-			self.weights[key] = 1
+    def add_condition(self, key, **kwargs):
+        if not key in self.weights:
+            self.weights[key] = 1
 
-		if not key in self.conditions:
-			self.conditions[key] = kwargs
+        if not key in self.conditions:
+            self.conditions[key] = kwargs
 
-			return
+            return
 
-		self.conditions[key].update(kwargs)
+        self.conditions[key].update(kwargs)
 
-	def add_reaction(self, key, **kwargs):
-		if not key in self.conditions:
-			raise Exception('Trying to add reaction \'%s\' without matching condition.' % key)
+    def add_reaction(self, key, **kwargs):
+        if not key in self.conditions:
+            raise Exception('Trying to add reaction \'%s\' without matching condition.' % key)
 
-		if not key in self.reactions:
-			self.reactions[key] = kwargs
+        if not key in self.reactions:
+            self.reactions[key] = kwargs
 
-			return
+            return
 
-		self.reactions[key].update(kwargs)
+        self.reactions[key].update(kwargs)
 
-	def set_weight(self, key, value):
-		if not key in self.conditions:
-			raise Exception('Trying to set weight \'%s\' without matching condition.' % key)
+    def set_weight(self, key, value):
+        if not key in self.conditions:
+            raise Exception('Trying to set weight \'%s\' without matching condition.' % key)
 
-		self.weights[key] = value
+        self.weights[key] = value
+        
+    def change_goal(self, key, **kwargs):
+        if not key in self.conditions:
+            raise Exception('Trying to add change \'%s\' without matching condition.' % key)
+
+        if not key in self.changes:
+            self.changes[key] = kwargs
+
+            return
+
+        self.changes[key].update(kwargs)
 
 
 def distance_to_state(state_1, state_2):
