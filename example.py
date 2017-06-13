@@ -21,16 +21,16 @@ if __name__ == '__main__':
     import time
 
     _world = Planner('hungry', 'has_food', 'in_kitchen', 'tired', 'in_bed', 'has_money',
-                     'is_fat')
+                     'is_fat', 'has_ingredients')
     _world.set_start_state(hungry=True, has_food=False, in_kitchen=False, tired=True, in_bed=False, 
-                           has_money=False, is_fat=False)
+                           has_money=False, is_fat=False, has_ingredients=False)
     _world.set_goal_state(tired=False, is_fat=True)
 
     _actions = Action_List()
     _actions.add_condition('eat', hungry=True, has_food=True, in_kitchen=False)
     _actions.add_reaction('eat', hungry=False, has_food=False)
-    _actions.add_condition('cook', hungry=True, has_food=False, in_kitchen=True)
-    _actions.add_reaction('cook', has_food=True)
+    _actions.add_condition('cook', hungry=True, has_food=False, in_kitchen=True, has_ingredients=True)
+    _actions.add_reaction('cook', has_food=True, has_ingredients=False)
     _actions.add_condition('sleep', tired=True, in_bed=True)
     _actions.add_reaction('sleep', tired=False)
     _actions.add_condition('go_to_bed', in_bed=False, hungry=False)
@@ -40,9 +40,11 @@ if __name__ == '__main__':
     _actions.add_condition('leave_kitchen', in_kitchen=True)
     _actions.add_reaction('leave_kitchen', in_kitchen=False)
     _actions.add_condition('order_pizza', has_food=False, hungry=True, has_money=True)
-    _actions.add_reaction('order_pizza', has_food=True, is_fat=True) 
+    _actions.add_reaction('order_pizza', has_food=True, is_fat=True, has_money=False) 
     _actions.add_condition('fetch_money', has_money=False)
     _actions.add_reaction('fetch_money', has_money=True)
+    _actions.add_condition('buy_ingredients', has_money=True, in_kitchen=False)
+    _actions.add_reaction('buy_ingredients', has_money=False, has_ingredients=True)
     _actions.set_weight('cook', 20)
     _actions.set_weight('order_pizza', 2)
     _actions.set_weight('fetch_money', 20)
