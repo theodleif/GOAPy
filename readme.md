@@ -7,6 +7,8 @@ Goal-Oriented Action Planning is a generic architecture for autonomous AI.
 
 Created by Jeff Orkin, GOAP is employed by a variety of AAA game titles, known for its high level of flexibility and ease-of-use. Those interested in learning more should check out [Jeff's website.](http://alumni.media.mit.edu/~jorkin/goap.html)
 
+A good description of the A* algorithm can be found [here.](http://www.redblobgames.com/pathfinding/a-star/introduction.html)
+
 ## Warning
 
 This library is currently in development.
