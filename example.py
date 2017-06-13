@@ -9,12 +9,12 @@ def print_path():
         if path['name'] in _actions.changes:
             pn = path['name']
             ac = _actions.changes[pn]
-            print "At",pn, "goal changes",ac
             for c in ac:
-                _world.goal_state[c] = ac[c]
-            del _actions.changes[path['name']]
-            _path = _world.calculate()
-            return False
+                if _world.goal_state[c] != ac[c]:
+                    _world.goal_state[c] = ac[c]
+                    print "After", pn, "goal changes:", c, "=", ac[c]
+                    _path = _world.calculate()
+                    return False
     return True
     
 if __name__ == '__main__':
@@ -24,7 +24,7 @@ if __name__ == '__main__':
                      'is_fat', 'has_ingredients')
     _world.set_start_state(hungry=True, has_food=False, in_kitchen=False, tired=True, in_bed=False, 
                            has_money=False, is_fat=False, has_ingredients=False)
-    _world.set_goal_state(tired=False, is_fat=True)
+    _world.set_goal_state(tired=False)
 
     _actions = Action_List()
     _actions.add_condition('eat', hungry=True, has_food=True, in_kitchen=False)
