@@ -11,12 +11,9 @@ def print_path():
             ac = _actions.changes[pn]
             print "At",pn, "goal changes",ac
             for c in ac:
-                if ac[c] == True:
-                    acc = "True"
-                else:
-                    acc = "False"
-                exec("_world.set_goal_state(" + c + "=" + acc + ")" )
+                _world.goal_state[c] = ac[c]
             del _actions.changes[path['name']]
+            _path = _world.calculate()
             return False
     return True
     
@@ -49,7 +46,7 @@ if __name__ == '__main__':
     _actions.set_weight('cook', 20)
     _actions.set_weight('order_pizza', 2)
     _actions.set_weight('fetch_money', 20)
-    _actions.change_goal('eat', is_fat=False)
+    _actions.change_goal('order_pizza', is_fat=False)
 
     _world.set_action_list(_actions)
     
